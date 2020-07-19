@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Keepr.Models;
 using Keepr.Repositories;
 
@@ -12,24 +13,49 @@ namespace Keepr.Services
       _repo = repo;
     }
 
-    internal object GetByUserId(string userId)
+    internal IEnumerable<Vault> GetByUserId(string userId)
     {
-      throw new NotImplementedException();
+      return _repo.GetVaultsByUserId(userId);
     }
 
-    internal object GetById(int id)
+    internal Vault GetById(int id)
     {
-      throw new NotImplementedException();
+      Vault foundVault = _repo.GetById(id);
+      if (foundVault == null)
+      {
+        throw new Exception("Invalid Id");
+      }
+      return foundVault;
+    }
+
+    internal IEnumerable<Vault> Get()
+    {
+      return _repo.GetAll();
     }
 
     internal object Create(Vault newVault)
     {
-      throw new NotImplementedException();
+      return _repo.Create(newVault);
     }
 
-    internal object Edit(Vault vaultToUpdate, string userId)
+    // internal object Edit(Vault vaultToUpdate, string userId)
+    // {
+    //   Vault foundVault = GetById(vaultToUpdate.Id);
+    //   if(foundVault.)
+    // }
+
+    internal object Delete(int id, string userId)
     {
-      throw new NotImplementedException();
+      Vault foundVault = GetById(id);
+      if (foundVault.UserId != userId)
+      {
+        throw new Exception("This is not your Vault!");
+      }
+      if (_repo.Delete(id, userId))
+      {
+        return "Successfully Deleted";
+      }
+      throw new Exception("Something has gone wrong");
     }
   }
 }
