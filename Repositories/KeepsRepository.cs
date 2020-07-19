@@ -35,8 +35,19 @@ namespace Keepr.Repositories
 
     internal Keep GetById(int id)
     {
-      string sql = "SELECT * FROM keeps WHERE id = @id";
+      string sql = "SELECT * FROM keeps WHERE id = @Id";
       return _db.QueryFirstOrDefault<Keep>(sql, new { id });
+    }
+
+    internal bool EditKeepViews(Keep editKeep)
+    {
+      string sql = @"
+      UPDATE keeps
+      SET
+      views = @Views
+      WHERE id = @Id";
+      int affectedRows = _db.Execute(sql, editKeep);
+      return affectedRows == 1;
     }
 
     internal Keep Create(Keep newKeep)
@@ -45,11 +56,84 @@ namespace Keepr.Repositories
       INSERT INTO keeps
       (userId, name, description, img,
       isPrivate, views, shares, keeps)
-      VALUSE
+      VALUES
       (@UserId, @Name, @Description, @Img, 
-      @IsPrivate, @Views, @Shares, @Keeps";
+      @IsPrivate, @Views, @Shares, @Keeps);
+      SELECT LAST_INSERT_ID()";
       newKeep.Id = _db.ExecuteScalar<int>(sql, newKeep);
       return newKeep;
+    }
+
+    internal bool EditKeepShares(Keep editKeep)
+    {
+      string sql = @"
+      UPDATE keeps
+      SET
+      shares = @Shares
+      WHERE id = @Id";
+      int affectedRows = _db.Execute(sql, editKeep);
+      return affectedRows == 1;
+    }
+
+    internal bool EditKeepKeeps(Keep editKeep)
+    {
+      string sql = @"
+      UPDATE keeps
+      SET
+      keeps = @Keeps
+      WHERE id = @Id";
+      int affectedRows = _db.Execute(sql, editKeep);
+      return affectedRows == 1;
+    }
+
+    // internal bool EditKeepStats(Keep keepToUpdate)
+    // {
+    //   string sql = @"
+    //   UPDATE keeps
+    //   SET
+    //   views = @Views,
+    //   shares = @Shares,
+    //   keeps = @Keeps
+    //   WHERE id = @Id";
+    //   int affectedRows = _db.Execute(sql, keepToUpdate);
+    //   return affectedRows == 1;
+    // }
+
+    // internal bool Edit(Keep foundKeep, string userId)
+    // {
+    //   string sql = @"
+    //   UPDATE keeps
+    //   SET
+    //     name = @Name,
+    //     description = @Description,
+    //     img = @Img,
+    //     isPrivate = @IsPrivate,
+    //     views = @Views,
+    //     shares = @Shares,
+    //     keeps = @Keeps
+    //   WHERE id = @Id
+    //   AND userId = @UserId;";
+    //   int affectedRows = _db.Execute(sql, foundKeep);
+    //   return affectedRows == 1;
+    // }
+
+    internal bool Edit(Keep foundKeep, string userId)
+    {
+      foundKeep.UserId = userId;
+      string sql = @"
+      UPDATE keeps
+      SET
+        name = @Name,
+        description = @Description,
+        img = @Img,
+        isPrivate = @IsPrivate,
+        views = @Views,
+        shares = @Shares,
+        keeps = @Keeps
+      WHERE id = @Id
+      AND userId = @UserId;";
+      int affectedRows = _db.Execute(sql, foundKeep);
+      return affectedRows == 1;
     }
 
     internal bool Delete(int id, string userId)

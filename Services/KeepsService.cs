@@ -34,6 +34,44 @@ namespace Keepr.Services
     {
       return _repo.Create(newKeep);
     }
+    internal Keep Edit(Keep editKeep, string userId)
+    {
+      Keep foundKeep = GetById(editKeep.Id);
+      if (foundKeep.Views < editKeep.Views)
+      {
+        if (_repo.EditKeepViews(editKeep))
+        {
+          foundKeep.Views = editKeep.Views;
+          return foundKeep;
+        }
+        throw new Exception("didn't increas numbers");
+      }
+      if (foundKeep.Shares < editKeep.Shares)
+      {
+        if (_repo.EditKeepShares(editKeep))
+        {
+          foundKeep.Shares = editKeep.Shares;
+          return foundKeep;
+        }
+        throw new Exception("didn't increas numbers");
+      }
+      if (foundKeep.Keeps < editKeep.Keeps)
+      {
+        if (_repo.EditKeepKeeps(editKeep))
+        {
+          foundKeep.Keeps = editKeep.Keeps;
+          return foundKeep;
+        }
+        throw new Exception("didn't increase numbers");
+      }
+      if (foundKeep.UserId == userId && _repo.Edit(editKeep, userId))
+      {
+        return editKeep;
+      }
+      throw new Exception("you can't edit that, its not your keep");
+
+    }
+
 
     internal string Delete(int id, string userId)
     {
@@ -48,5 +86,7 @@ namespace Keepr.Services
       }
       throw new Exception("somehting has gone terribly wrong");
     }
+
+
   }
 }
