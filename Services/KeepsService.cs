@@ -73,14 +73,14 @@ namespace Keepr.Services
     }
 
 
-    internal string Delete(int id, string userId)
+    internal string Delete(int id, string user)
     {
       Keep foundKeep = GetById(id);
-      if (foundKeep.UserId != userId)
+      if (foundKeep.UserId != user)
       {
         throw new Exception("this is not your keep!");
       }
-      if (_repo.Delete(id, userId))
+      if (_repo.Delete(id, user))
       {
         return "Successfully Deleted";
       }

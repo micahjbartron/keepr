@@ -33,12 +33,12 @@ namespace Keeper.Controllers
     }
     [HttpPost]
     [Authorize]
-    public ActionResult<DTOVaultKeep> post([FromBody] DTOVaultKeep newDTOVaultKeep)
+    public ActionResult<DTOVaultKeep> post([FromBody] DTOVaultKeep newVaultKeep)
     {
       try
       {
-        newDTOVaultKeep.UserId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-        return Ok(_vks.Create(newDTOVaultKeep));
+        newVaultKeep.UserId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        return Ok(_vks.Create(newVaultKeep));
       }
       catch (Exception e)
       {

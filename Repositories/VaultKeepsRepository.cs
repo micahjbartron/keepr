@@ -43,9 +43,9 @@ namespace Keepr.Repositories
     {
       string sql = @"
       INSERT INTO vaultkeeps
-      (userid, vaultid, keepid)
+      (userId, vaultId, keepId)
       VALUES 
-      (@UserId, VaultId, KeepId);
+      (@UserId, @VaultId, @KeepId);
       SELECT LAST_INSERT_ID();";
       newVaultKeep.Id = _db.ExecuteScalar<int>(sql, newVaultKeep);
       return newVaultKeep;
@@ -53,10 +53,10 @@ namespace Keepr.Repositories
 
 
 
-    internal bool Delete(int id, string user)
+    internal bool Delete(int id, string userId)
     {
-      string sql = "DELETE FROM vaultkeeps WHERE id = @id AND user = @user LIMIT 1";
-      int affectedRows = _db.Execute(sql, new { id, user });
+      string sql = "DELETE FROM vaultkeeps WHERE id = @id AND userid = @userId LIMIT 1";
+      int affectedRows = _db.Execute(sql, new { id, userId });
       return affectedRows == 1;
     }
 

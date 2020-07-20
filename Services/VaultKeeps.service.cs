@@ -27,10 +27,10 @@ namespace Keepr.Services
     // }
     public DTOVaultKeep Create(DTOVaultKeep newVaultKeep)
     {
-      if (_repo.hasRelationship(newVaultKeep))
-      {
-        throw new Exception("That's already in your vault");
-      }
+      // if (_repo.hasRelationship(newVaultKeep))
+      // {
+      //   throw new Exception("That's already in your vault");
+      // }
       return _repo.Create(newVaultKeep);
     }
 
