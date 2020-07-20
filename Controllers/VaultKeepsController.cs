@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Security.Claims;
 using Keepr.Models;
 using Keepr.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -8,12 +10,26 @@ namespace Keeper.Controllers
 {
   [ApiController]
   [Route("api/[controller]")]
+  [Authorize]
   public class VaultKeepsController : ControllerBase
   {
-    private readonly VaultKeepsService _service;
+    private readonly VaultKeepsService _vks;
     public VaultKeepsController(VaultKeepsService service)
     {
-      _service = service;
+      _vks = service;
+    }
+    [HttpGet]
+    public ActionResult<IEnumerable<VaultKeepViewModel>> GetAction()
+    {
+      try
+      {
+        string userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        return Ok(_vks.Get(userId));
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
     }
     [HttpPost]
     [Authorize]
@@ -21,7 +37,8 @@ namespace Keeper.Controllers
     {
       try
       {
-        return Ok(_service.Create(newDTOVaultKeep));
+        newDTOVaultKeep.UserId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        return Ok(_vks.Create(newDTOVaultKeep));
       }
       catch (Exception e)
       {
@@ -29,12 +46,12 @@ namespace Keeper.Controllers
       }
     }
     [HttpDelete("{id}")]
-    [Authorize]
     public ActionResult<DTOVaultKeep> Delete(int id)
     {
       try
       {
-        return Ok(_service.Delete(id));
+        string user = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        return Ok(_vks.Delete(user, id));
       }
       catch (Exception e)
       {

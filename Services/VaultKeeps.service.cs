@@ -12,25 +12,54 @@ namespace Keepr.Services
     {
       _repo = repo;
     }
-    public DTOVaultKeep Get(int Id)
+    internal IEnumerable<VaultKeepViewModel> Get(string userId)
     {
-      DTOVaultKeep exists = _repo.GetById(Id);
-      if (exists == null) { throw new Exception("Invalid VaultKeep"); }
-      return exists;
+      return _repo.GetByUser(userId);
     }
+    // public DTOVaultKeep Get(int Id)
+    // {
+    //   DTOVaultKeep exists = _repo.GetById(Id);
+    //   if (exists == null)
+    //   {
+    //     throw new Exception("Invalid vaultkeep");
+    //   }
+    //   return exists;
+    // }
     public DTOVaultKeep Create(DTOVaultKeep newVaultKeep)
     {
-      int id = _repo.Create(newVaultKeep);
-      newVaultKeep.Id = id;
-      return newVaultKeep;
+      if (_repo.hasRelationship(newVaultKeep))
+      {
+        throw new Exception("That's already in your vault");
+      }
+      return _repo.Create(newVaultKeep);
     }
 
-    public DTOVaultKeep Delete(int id)
+    private DTOVaultKeep GetById(int id)
     {
-      DTOVaultKeep exists = Get(id);
-      _repo.Delete(id);
-      return exists;
+      var found = _repo.GetById(id);
+      if (found == null)
+      {
+        throw new Exception("Invalid Id");
+      }
+      return found;
     }
+
+    public DTOVaultKeep Delete(string user, int id)
+    {
+      var found = GetById(id);
+      if (found.UserId != user)
+      {
+        throw new UnauthorizedAccessException("this is not your keep");
+      }
+      if (_repo.Delete(id, user))
+      {
+        return found;
+      }
+      throw new Exception("oops");
+    }
+
+
+
     public IEnumerable<VaultKeepViewModel> GetKeepsByVaultId(int id)
     {
       return _repo.GetKeepsByVaultId(id);
