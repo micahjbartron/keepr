@@ -1,7 +1,7 @@
 <template>
   <div class="home container-fluid">
     <div class="row">
-      <div class="col text-center">
+      <div v-if="$auth.user.sub" class="col text-center">
         <keep-form />
       </div>
     </div>
@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import KeepComponent from "../components/KeepComponent.vue";
-import KeepForm from "../components/KeepFormComponent.vue";
+import KeepComponent from "@/components/KeepComponent.vue";
+import KeepForm from "@/components/KeepFormComponent.vue";
 export default {
   name: "home",
   components: {
@@ -21,7 +21,7 @@ export default {
     KeepForm
   },
   mounted() {
-    this.getKeeps();
+    this.$store.dispatch("getKeeps");
   },
   computed: {
     user() {
@@ -34,10 +34,10 @@ export default {
   methods: {
     logout() {
       this.$store.dispatch("logout");
-    },
-    getKeeps() {
-      this.$store.dispatch("getKeeps");
     }
+    // getKeeps() {
+    //   this.$store.dispatch("getKeeps");
+    // }
   }
 };
 </script>

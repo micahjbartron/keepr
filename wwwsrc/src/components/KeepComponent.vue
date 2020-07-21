@@ -1,16 +1,18 @@
 <template>
   <div class="keepComponent col-3">
     <div class="card my-1 shadow">
-      <img class="card-img-top" :src="keepProp.img" />
+      <router-link :to="{name: 'keep', params: {keepId: keepProp.id}}">
+        <img class="card-img-top" :src="keepProp.img" />
+      </router-link>
       <div class="card-body">
         <h4 class="card-title">{{keepProp.name}}</h4>
         <p class="card-text">{{keepProp.description}}</p>
         <div class="row">
           <div class="col-6">
-            <i @click="addToVault" class="fa fa-plus" aria-hidden="true"></i>
+            <i class="fa fa-plus" aria-hidden="true"></i>
           </div>
-          <div class="col-6 justify-content end">
-            <button v-if="keepProp.id == $auth.user.sub" class="btn btn-outline-danger">delete</button>
+          <div v-if="keepProp.userId == $auth.user.sub" class="col-6 justify-content end">
+            <button @click="deleteKeep(keepProp.id)" class="btn btn-outline-danger">delete</button>
           </div>
         </div>
       </div>
@@ -23,10 +25,29 @@
 export default {
   name: "keepComponent",
   data() {
-    return {};
+    return {
+      delete: {
+        content: ""
+        // keepId: this.$rout.params.keepId
+      }
+    };
   },
-  computed: {},
-  methods: {},
+  mounted() {
+    this.$store.dispatch("getKeeps");
+  },
+  computed: {
+    user() {
+      return this.$store.state.user;
+    }
+  },
+  methods: {
+    deleteKeep() {
+      this.$store.dispatch("deleteKeep", this.keepProp.id);
+    },
+    addToVault() {
+      this.$store.dispatch("addToVault");
+    }
+  },
   components: {},
   props: ["keepProp"]
 };
