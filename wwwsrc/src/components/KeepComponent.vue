@@ -13,9 +13,18 @@
               <i class="fa fa-plus" aria-hidden="true"></i>
             </router-link>
           </div>
-          <div v-if="keepProp.userId == $auth.user.sub" class="col-6 justify-content end">
+          <div
+            v-if="$auth.user && keepProp.userId == $auth.user.sub"
+            class="col-6 justify-content end"
+          >
             <button @click="deleteKeep(keepProp.id)" class="btn btn-outline-danger">delete</button>
           </div>
+        </div>
+        <div class="row">
+          <div class="col">Vaulted: {{keepProp.keeps}}</div>
+        </div>
+        <div class="row">
+          <div class="col">views: {{keepProp.views}}</div>
         </div>
       </div>
     </div>

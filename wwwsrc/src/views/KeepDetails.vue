@@ -4,20 +4,32 @@
       <div class="col-6">
         <img class="card-img-top" :src="keep.img" />
         <p>Views: {{keep.views}}</p>
-        <p>Vaulted: {{keep.Keeps}}</p>
+        <p>Vaulted: {{keep.keeps}}</p>
       </div>
       <div class="col-6">
         <h2>Name: {{keep.name}}</h2>
         <h2>Description: {{keep.description}}</h2>
         <button @click="addForm = true;" class="btn btn-primary">add to Vault</button>
-        <form v-if="addForm">
+        <form v-if="addForm" @submit.prevent="createVault">
           <div class="form-group">
             <label for="name">Vault Name</label>
-            <input type="text" class="form-control" id placeholder="Vault Name..." />
+            <input
+              type="text"
+              class="form-control"
+              id
+              placeholder="Vault Name..."
+              v-model="newVault.name"
+            />
           </div>
           <div class="form-group">
             <label for="description">Vault Description</label>
-            <input type="text" class="form-control" id placeholder="Vault Description..." />
+            <input
+              type="text"
+              class="form-control"
+              id
+              placeholder="Vault Description..."
+              v-model="newVault.description"
+            />
           </div>
           <div class="form-row">
             <div class="form-group col-md-4">
@@ -50,7 +62,8 @@ export default {
 
   data() {
     return {
-      addForm: false
+      addForm: false,
+      newVault: {}
     };
   },
   mounted() {
@@ -68,7 +81,11 @@ export default {
       return this.$store.state.vaults;
     }
   },
-  methods: {},
+  methods: {
+    createVault() {
+      this.$store.dispatch("createVault", this.newVault);
+    }
+  },
   components: {
     VaultComponent
   }

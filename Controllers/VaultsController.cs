@@ -20,6 +20,7 @@ namespace Keepr.Controllers
       _vks = vks;
     }
     [HttpGet]
+    [Authorize]
     public ActionResult<IEnumerable<Vault>> Get()
     {
       try

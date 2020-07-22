@@ -1,7 +1,7 @@
 <template>
   <div class="home container-fluid">
     <div class="row">
-      <div v-if="$auth.user.sub" class="col text-center">
+      <div v-if="$auth.user && $auth.user.sub" class="col text-center">
         <keep-form />
       </div>
     </div>
@@ -22,7 +22,6 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getKeeps");
-    this.$store.dispatch("getMyKeeps");
   },
   computed: {
     // user() {
