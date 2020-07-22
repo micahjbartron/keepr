@@ -7,7 +7,9 @@
 
 <script>
 export default {
-  mounted() {},
+  mounted() {
+    this.$store.dispatch("getKeepsByUser");
+  },
   computed: {}
 };
 </script>

@@ -21,11 +21,11 @@ namespace Keepr.Controllers
       _ks = ks;
     }
     [HttpGet]
-    public ActionResult<IEnumerable<Keep>> Get()
+    public ActionResult<IEnumerable<Keep>> GetAll()
     {
       try
       {
-        return Ok(_ks.Get());
+        return Ok(_ks.GetAll());
       }
       catch (Exception e)
       {

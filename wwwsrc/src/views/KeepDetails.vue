@@ -58,6 +58,9 @@ export default {
     this.$store.dispatch("getVaults");
   },
   computed: {
+    user() {
+      return this.$store.state.user;
+    },
     keep() {
       return this.$store.state.activeKeep;
     },

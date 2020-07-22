@@ -22,14 +22,17 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getKeeps");
-    this.$store.dispatch("getVaults");
+    this.$store.dispatch("getMyKeeps");
   },
   computed: {
-    user() {
-      return this.$store.state.user;
-    },
+    // user() {
+    //   return this.$store.state.user;
+    // },
     keeps() {
       return this.$store.state.keeps;
+    },
+    myKeeps() {
+      return this.$store.state.myKeeps;
     }
     // vaults() {
     //   return this.$store.state.vaults;
@@ -39,9 +42,6 @@ export default {
     logout() {
       this.$store.dispatch("logout");
     }
-    // getKeeps() {
-    //   this.$store.dispatch("getKeeps");
-    // }
   }
 };
 </script>
