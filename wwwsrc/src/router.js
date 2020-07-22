@@ -24,7 +24,7 @@ export default new Router({
     },
     {
       path: "/keeps/:keepId",
-      name: "Keeps",
+      name: "keep",
       component: Keep,
       beforeEnter: authGuard
     },

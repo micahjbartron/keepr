@@ -12,7 +12,10 @@ namespace Keepr.Services
     {
       _repo = repo;
     }
-
+    internal IEnumerable<Vault> Get()
+    {
+      return _repo.GetAll();
+    }
     internal IEnumerable<Vault> GetByUserId(string userId)
     {
       return _repo.GetVaultsByUserId(userId);
@@ -27,12 +30,6 @@ namespace Keepr.Services
       }
       return foundVault;
     }
-
-    internal IEnumerable<Vault> Get()
-    {
-      return _repo.GetAll();
-    }
-
     internal object Create(Vault newVault)
     {
       return _repo.Create(newVault);

@@ -22,6 +22,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getKeeps");
+    this.$store.dispatch("getVaults");
   },
   computed: {
     user() {
@@ -30,6 +31,9 @@ export default {
     keeps() {
       return this.$store.state.keeps;
     }
+    // vaults() {
+    //   return this.$store.state.vaults;
+    // }
   },
   methods: {
     logout() {

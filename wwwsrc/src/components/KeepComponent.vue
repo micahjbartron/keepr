@@ -9,7 +9,9 @@
         <p class="card-text">{{keepProp.description}}</p>
         <div class="row">
           <div class="col-6">
-            <i class="fa fa-plus" aria-hidden="true"></i>
+            <router-link :to="{name: 'keep', params: {keepId: keepProp.id}}">
+              <i class="fa fa-plus" aria-hidden="true"></i>
+            </router-link>
           </div>
           <div v-if="keepProp.userId == $auth.user.sub" class="col-6 justify-content end">
             <button @click="deleteKeep(keepProp.id)" class="btn btn-outline-danger">delete</button>
@@ -43,10 +45,10 @@ export default {
   methods: {
     deleteKeep() {
       this.$store.dispatch("deleteKeep", this.keepProp.id);
-    },
-    addToVault() {
-      this.$store.dispatch("addToVault");
     }
+    // addToVault() {
+    //   this.$store.dispatch("addToVault");
+    // }
   },
   components: {},
   props: ["keepProp"]
