@@ -1,12 +1,12 @@
 <template>
-  <div class="myKeepComponent">
+  <div class="myKeepComponent col-3">
     <div class="card my-1 shadow">
       <router-link :to="{name: 'keep', params: {keepId: keepProp.id}}">
         <img class="card-img-top" :src="keepProp.img" />
       </router-link>
       <div class="card-body">
-        <h4 class="card-title">{{myKeepsProp.name}}</h4>
-        <p class="card-text">{{myKeepsProp.description}}</p>
+        <h4 class="card-title">{{keepProp.name}}</h4>
+        <p class="card-text">{{keepProp.description}}</p>
         <div class="row">
           <div class="col-6">
             <router-link :to="{name: 'keep', params: {keepId: keepProp.id}}">
@@ -48,7 +48,7 @@ export default {
     }
   },
   components: {},
-  props: ["myKeepsProp"]
+  props: ["keepProp"]
 };
 </script>
 

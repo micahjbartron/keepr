@@ -31,24 +31,23 @@
               v-model="newVault.description"
             />
           </div>
-          <div class="form-row">
-            <div class="form-group col-md-4">
-              <label for="vaults">Vaults</label>
-              <select id class="form-control">
-                <option selected>Choose...</option>
-                <VaultComponent v-for="vault in vault" :key="vault.id" :vaultProp="vault"></VaultComponent>
-              </select>
-            </div>
-          </div>
           <div class="form-group">
             <div class="form-check">
               <input class="form-check-input" type="checkbox" id="gridCheck" />
               <label class="form-check-label" for="gridCheck">private?</label>
             </div>
-            <button type="submit" class="btn btn-primary">add</button>
-            <p>{{vault.name}}</p>
           </div>
+          <button type="submit" class="btn btn-primary">add</button>
         </form>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="vaults">Vaults</label>
+            <select id class="form-control">
+              <option selected>Choose...</option>
+              <VaultComponent v-for="vault in vault" :key="vault.id" :vaultProp="vault"></VaultComponent>
+            </select>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -59,7 +58,6 @@
 import VaultComponent from "@/components/VaultListComponent.vue";
 export default {
   name: "keep",
-
   data() {
     return {
       addForm: false,
@@ -84,6 +82,14 @@ export default {
   methods: {
     createVault() {
       this.$store.dispatch("createVault", this.newVault);
+    },
+    addVaultKeep() {
+      event.stopPropagation();
+      debugger;
+      this.$store.dispatch("addVaultKeep", {
+        keepId: this.keep.id,
+        vaultId: this.vault.id
+      });
     }
   },
   components: {

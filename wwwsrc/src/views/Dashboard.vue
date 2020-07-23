@@ -36,7 +36,6 @@ export default {
     this.$store.dispatch("getMyKeeps");
     this.$store.dispatch("getMyVaults");
   },
-  name: "dashboard",
   components: {
     MyVaultComponent,
     MyKeepsComponent

@@ -1,6 +1,8 @@
 <template>
   <tr>
-    <td>{{vaultProp.name}}</td>
+    <td>
+      <router-link :to="{name: 'vault', params: {vaultId: vaultProp.id}}">{{vaultProp.name}}</router-link>
+    </td>
     <td>{{vaultProp.description}}</td>
   </tr>
 </template>
