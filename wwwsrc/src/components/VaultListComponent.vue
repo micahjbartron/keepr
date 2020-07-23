@@ -1,5 +1,5 @@
 <template>
-  <option class="vault">{{vaultProp.name}}</option>
+  <button @click="addToVault(vaultProp.id)" class="dropdown-item" type="button">{{vaultProp.name}}</button>
 </template>
 
 
@@ -15,12 +15,25 @@ export default {
   computed: {
     user() {
       return this.$store.state.user;
+    },
+    keep() {
+      return this.$store.state.activeKeep;
     }
   },
-  methods: {},
+  methods: {
+    addToVault() {
+      event.stopPropagation();
+      debugger;
+      this.$store.dispatch("addVaultKeep", {
+        keepId: this.$store.state.activeKeep.id,
+        vaultId: this.vaultProp.id
+      });
+    }
+  },
   components: {},
   props: ["vaultProp"]
 };
+// <option class="vault">{{vaultProp.name}}</option>
 </script>
 
 
