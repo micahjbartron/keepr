@@ -3,6 +3,8 @@
     <div class="row">
       <div class="col">
         <h4>{{vault.name}}</h4>
+        <p>Description: {{vault.description}}</p>
+        <VaultKeepsComponent v-for="keep in keeps" :key="keep.id" :keepProp="keep"></VaultKeepsComponent>
       </div>
     </div>
   </div>
@@ -10,6 +12,7 @@
 
 
 <script>
+import VaultKeepsComponent from "@/components/VaultKeepsComponent.vue";
 export default {
   name: "vault",
   data() {
@@ -17,15 +20,26 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getActiveVault", this.$route.params.vaultId);
-    this.$store.dispatch("getVaultKeeps");
+    this.getKeeps();
+    this.$store.dispatch("getKeeps", this.vault.id);
   },
   computed: {
     vault() {
       return this.$store.state.activeVault;
+    },
+    keeps() {
+      return this.$store.state.vaultKeeps;
     }
   },
-  methods: {},
-  components: {}
+  methods: {
+    getKeeps() {
+      this.$store.dispatch("getVaultKeeps");
+    }
+  },
+  components: {
+    VaultKeepsComponent
+  },
+  props: ["keep"]
 };
 </script>
 

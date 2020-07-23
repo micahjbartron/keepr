@@ -15,11 +15,23 @@ namespace Keepr.Repositories
     {
       _db = db;
     }
+    internal DTOVaultKeep Create(DTOVaultKeep newVaultKeep)
+    {
+      string sql = @"
+      INSERT INTO vaultkeeps
+      (userId, vaultId, keepId)
+      VALUES 
+      (@UserId, @VaultId, @KeepId);
+      SELECT LAST_INSERT_ID();";
+      newVaultKeep.Id = _db.ExecuteScalar<int>(sql, newVaultKeep);
+      return newVaultKeep;
+    }
     internal DTOVaultKeep GetById(int id)
     {
       string sql = "SELECT * FROM vaultkeeps WHERE id = @id";
       return _db.QueryFirstOrDefault<DTOVaultKeep>(sql, new { id });
     }
+
     internal IEnumerable<VaultKeepViewModel> GetByUser(string userId)
     {
       string sql = @"
@@ -39,17 +51,7 @@ namespace Keepr.Repositories
       return found != null;
     }
 
-    internal DTOVaultKeep Create(DTOVaultKeep newVaultKeep)
-    {
-      string sql = @"
-      INSERT INTO vaultkeeps
-      (userId, vaultId, keepId)
-      VALUES 
-      (@UserId, @VaultId, @KeepId);
-      SELECT LAST_INSERT_ID();";
-      newVaultKeep.Id = _db.ExecuteScalar<int>(sql, newVaultKeep);
-      return newVaultKeep;
-    }
+
 
 
 
