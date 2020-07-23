@@ -41,6 +41,9 @@ export default new Vuex.Store({
     },
     setMyKeeps(state, keeps) {
       state.myKeeps = keeps
+    },
+    setMyVaults(state, vaults) {
+      state.myVaults = vaults
     }
   },
   actions: {
@@ -102,8 +105,13 @@ export default new Vuex.Store({
     async getMyKeeps({ commit }) {
 
       let res = await api.get("/keeps/user")
-      debugger
       commit("setMyKeeps", res.data)
+
+    },
+    async getMyVaults({ commit }) {
+
+      let res = await api.get("/vaults/user")
+      commit("setMyVaults", res.data)
 
     }
   }
