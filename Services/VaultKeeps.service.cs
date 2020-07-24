@@ -60,9 +60,9 @@ namespace Keepr.Services
 
 
 
-    public IEnumerable<VaultKeepViewModel> GetKeepsByVaultId(int id)
+    public IEnumerable<VaultKeepViewModel> GetKeepsByVaultId(int vaultId, string userId)
     {
-      return _repo.GetKeepsByVaultId(id);
+      return _repo.GetKeepsByVaultId(vaultId, userId);
     }
   }
 }

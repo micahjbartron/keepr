@@ -27,7 +27,7 @@ namespace Keepr.Repositories
       newVaultKeep.Id = _db.ExecuteScalar<int>(sql, newVaultKeep);
       return newVaultKeep;
     }
-    internal IEnumerable<VaultKeepViewModel> GetKeepsByVaultId(int id)
+    internal IEnumerable<VaultKeepViewModel> GetKeepsByVaultId(int vaultId, string userId)
     {
       string sql = @"
       SELECT
@@ -35,9 +35,9 @@ namespace Keepr.Repositories
         vk.id as vaultKeepId
       FROM vaultkeeps vk
       INNER JOIN keeps k ON k.id = vk.keepId
-      WHERE(vaultId = @vaultId AND vk.userId = @id)
+      WHERE(vaultId = @vaultId AND vk.userId = @userId)
       ";
-      return _db.Query<VaultKeepViewModel>(sql, new { id });
+      return _db.Query<VaultKeepViewModel>(sql, new { vaultId, userId });
     }
     internal DTOVaultKeep GetById(int id)
     {
