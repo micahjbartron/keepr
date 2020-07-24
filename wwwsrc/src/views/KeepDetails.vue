@@ -11,7 +11,7 @@
           <div class="col">
             <h2>Name: {{keep.name}}</h2>
             <h2>Description: {{keep.description}}</h2>
-            <button @click="addForm = true;" class="btn btn-primary">add to Vault</button>
+            <button @click="addForm = true;" class="btn btn-primary">Create vault</button>
             <form v-if="addForm" @submit.prevent="createVault">
               <div class="form-group">
                 <label for="name">Vault Name</label>
@@ -83,6 +83,7 @@ export default {
   mounted() {
     this.$store.dispatch("getActiveKeep", this.$route.params.keepId);
     this.$store.dispatch("getVaults");
+    this.$store.dispatch("getMyVaults");
   },
   computed: {
     user() {
@@ -92,7 +93,7 @@ export default {
       return this.$store.state.activeKeep;
     },
     vault() {
-      return this.$store.state.vaults;
+      return this.$store.state.myVaults;
     }
   },
   methods: {

@@ -23,6 +23,7 @@ export default {
   methods: {
     addToVault() {
       event.stopPropagation();
+
       this.$store.dispatch("addVaultKeep", {
         keepId: this.$store.state.activeKeep.id,
         vaultId: this.vaultProp.id

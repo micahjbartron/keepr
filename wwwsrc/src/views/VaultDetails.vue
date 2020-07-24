@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     getKeeps() {
-      this.$store.dispatch("getVaultKeeps");
+      this.$store.dispatch("getVaultKeeps", this.$route.params.vaultId);
     }
   },
   components: {

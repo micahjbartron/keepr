@@ -19,7 +19,7 @@ namespace Keeper.Controllers
       _vks = service;
     }
     [HttpGet]
-    public ActionResult<IEnumerable<VaultKeepViewModel>> GetAction()
+    public ActionResult<IEnumerable<VaultKeepViewModel>> Get()
     {
       try
       {
