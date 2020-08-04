@@ -21,7 +21,7 @@ export default {
   mounted() {
     this.$store.dispatch("getActiveVault", this.$route.params.vaultId);
     this.getKeeps();
-    this.$store.dispatch("getKeeps", this.vault.id);
+    // this.$store.dispatch("getKeeps", this.vault.id);
   },
   computed: {
     vault() {
@@ -29,17 +29,17 @@ export default {
     },
     keeps() {
       return this.$store.state.vaultKeeps;
-    }
+    },
   },
   methods: {
     getKeeps() {
       this.$store.dispatch("getVaultKeeps", this.$route.params.vaultId);
-    }
+    },
   },
   components: {
-    VaultKeepsComponent
+    VaultKeepsComponent,
   },
-  props: ["keep"]
+  props: ["keep"],
 };
 </script>
 

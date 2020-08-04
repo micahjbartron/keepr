@@ -12,10 +12,10 @@ namespace Keepr.Services
     {
       _repo = repo;
     }
-    internal IEnumerable<Vault> Get()
-    {
-      return _repo.GetAll();
-    }
+    // internal IEnumerable<Vault> Get()
+    // {
+    //   return _repo.GetAll();
+    // }
     internal IEnumerable<Vault> GetByUserId(string userId)
     {
       return _repo.GetVaultsByUserId(userId);

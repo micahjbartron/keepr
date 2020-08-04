@@ -11,36 +11,40 @@
           <div class="col">
             <h2>Name: {{keep.name}}</h2>
             <h2>Description: {{keep.description}}</h2>
-            <button @click="addForm = true;" class="btn btn-primary">Create vault</button>
-            <form v-if="addForm" @submit.prevent="createVault">
-              <div class="form-group">
-                <label for="name">Vault Name</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id
-                  placeholder="Vault Name..."
-                  v-model="newVault.name"
-                />
+            <button @click="addForm = !addForm" class="btn btn-primary">New Vault</button>
+            <div class="row">
+              <div v-show="addForm" class="col">
+                <form @submit.prevent="createVault">
+                  <div class="form-group">
+                    <label for="name">Vault Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id
+                      placeholder="Vault Name..."
+                      v-model="newVault.name"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="description">Vault Description</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id
+                      placeholder="Vault Description..."
+                      v-model="newVault.description"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="gridCheck" />
+                      <label class="form-check-label" for="gridCheck">private?</label>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Create</button>
+                </form>
               </div>
-              <div class="form-group">
-                <label for="description">Vault Description</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id
-                  placeholder="Vault Description..."
-                  v-model="newVault.description"
-                />
-              </div>
-              <div class="form-group">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="gridCheck" />
-                  <label class="form-check-label" for="gridCheck">private?</label>
-                </div>
-              </div>
-              <button type="submit" class="btn btn-primary">add</button>
-            </form>
+            </div>
           </div>
         </div>
         <div class="col-6">
@@ -77,12 +81,12 @@ export default {
   data() {
     return {
       addForm: false,
-      newVault: {}
+      newVault: {},
     };
   },
   mounted() {
     this.$store.dispatch("getActiveKeep", this.$route.params.keepId);
-    this.$store.dispatch("getVaults");
+    // this.$store.dispatch("getVaults");
     this.$store.dispatch("getMyVaults");
   },
   computed: {
@@ -94,24 +98,23 @@ export default {
     },
     vault() {
       return this.$store.state.myVaults;
-    }
+    },
   },
   methods: {
     createVault() {
       this.$store.dispatch("createVault", this.newVault);
-    }
-    // addToVault() {
-    //   event.stopPropagation();
-    //   debugger;
-    //   this.$store.dispatch("addVaultKeep", {
-    //     keepId: this.keep.id,
-    //     vaultId: this.vaultid
-    //   });
-    // }
+    },
+    addToVault() {
+      event.stopPropagation();
+      this.$store.dispatch("addVaultKeep", {
+        keepId: this.keep.id,
+        vaultId: this.vaultid,
+      });
+    },
   },
   components: {
-    VaultComponent
-  }
+    VaultComponent,
+  },
 };
 </script>
 

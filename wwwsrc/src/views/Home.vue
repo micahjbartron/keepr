@@ -18,7 +18,7 @@ export default {
   name: "home",
   components: {
     KeepComponent,
-    KeepForm
+    KeepForm,
   },
   mounted() {
     this.$store.dispatch("getKeeps");
@@ -32,7 +32,7 @@ export default {
     },
     myKeeps() {
       return this.$store.state.myKeeps;
-    }
+    },
     // vaults() {
     //   return this.$store.state.vaults;
     // }
@@ -40,7 +40,7 @@ export default {
   methods: {
     logout() {
       this.$store.dispatch("logout");
-    }
-  }
+    },
+  },
 };
 </script>

@@ -45,10 +45,10 @@ export default {
   methods: {
     deleteKeep() {
       this.$store.dispatch("deleteKeep", this.keepProp.id);
-    }
+    },
   },
   components: {},
-  props: ["keepProp"]
+  props: ["keepProp"],
 };
 </script>
 

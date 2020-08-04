@@ -13,11 +13,14 @@
               <i class="fa fa-plus" aria-hidden="true"></i>
             </router-link>
           </div>
-          <div
-            v-if="$auth.user && keepProp.userId == $auth.user.sub"
-            class="col-6 justify-content end"
-          >
-            <button @click="deleteKeep(keepProp.id)" class="btn btn-outline-danger">delete</button>
+          <div>
+            <div
+              v-if="$auth.user && keepProp.userId == $auth.user.sub"
+              class="col-6 justify-content end"
+            >
+              <button @click="deleteKeep(keepProp.id)" class="btn btn-outline-danger">delete</button>
+            </div>
+            <button @click="remove(keepProp.vaultKeepId)" class="btn btn-outline-danger">Remove</button>
           </div>
         </div>
         <div class="row">
@@ -36,15 +39,31 @@
 export default {
   name: "VaultKeepsComponent",
   data() {
-    return {};
+    return {
+      vaultKeepId: "",
+    };
   },
   mounted() {
-    this.$store.dispatch("getVaultKeeps");
+    // this.$store.dispatch("getVaultKeeps");
+    this.getVaultKeeps();
   },
   computed: {},
-  methods: {},
+  methods: {
+    getVaultKeeps() {
+      this.$store.dispatch("getVaultKeeps", this.$route.params.vaultId);
+    },
+    deleteKeep() {
+      this.$store.dispatch("deleteKeep", this.keepProp.id);
+    },
+    remove() {
+      this.$store.dispatch("removeFromVault", {
+        vaultKeepId: this.keepProp.vaultKeepId,
+        vaultId: this.$route.params.vaultId,
+      });
+    },
+  },
   components: {},
-  props: ["keepProp"]
+  props: ["keepProp"],
 };
 </script>
 

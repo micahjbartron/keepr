@@ -19,19 +19,19 @@ namespace Keepr.Controllers
       _vs = vs;
       _vks = vks;
     }
-    [HttpGet]
-    [Authorize]
-    public ActionResult<IEnumerable<Vault>> Get()
-    {
-      try
-      {
-        return Ok(_vs.Get());
-      }
-      catch (Exception e)
-      {
-        return BadRequest(e.Message);
-      }
-    }
+    // [HttpGet]
+    // [Authorize]
+    // public ActionResult<IEnumerable<Vault>> Get()
+    // {
+    //   try
+    //   {
+    //     return Ok(_vs.Get());
+    //   }
+    //   catch (Exception e)
+    //   {
+    //     return BadRequest(e.Message);
+    //   }
+    // }
 
     [HttpGet("user")]
     [Authorize]
@@ -70,6 +70,7 @@ namespace Keepr.Controllers
         return Ok(_vks.GetKeepsByVaultId(vaultId, userId));
       }
       catch (Exception e)
+
       {
         return BadRequest(e.Message);
       }

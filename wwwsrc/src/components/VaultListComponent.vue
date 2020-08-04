@@ -10,7 +10,7 @@ export default {
     return {};
   },
   mounted() {
-    this.$store.dispatch("getVaults");
+    // this.$store.dispatch("getMyVaults");
   },
   computed: {
     user() {
@@ -18,7 +18,7 @@ export default {
     },
     keep() {
       return this.$store.state.activeKeep;
-    }
+    },
   },
   methods: {
     addToVault() {
@@ -26,12 +26,12 @@ export default {
 
       this.$store.dispatch("addVaultKeep", {
         keepId: this.$store.state.activeKeep.id,
-        vaultId: this.vaultProp.id
+        vaultId: this.vaultProp.id,
       });
-    }
+    },
   },
   components: {},
-  props: ["vaultProp"]
+  props: ["vaultProp"],
 };
 // <option class="vault">{{vaultProp.name}}</option>
 </script>

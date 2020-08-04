@@ -14,11 +14,11 @@ namespace Keepr.Repositories
     {
       _db = db;
     }
-    internal IEnumerable<Vault> GetAll()
-    {
-      string sql = "SELECT * FROM vaults";
-      return _db.Query<Vault>(sql);
-    }
+    // internal IEnumerable<Vault> GetAll()
+    // {
+    //   string sql = "SELECT * FROM vaults";
+    //   return _db.Query<Vault>(sql);
+    // }
     internal IEnumerable<Vault> GetVaultsByUserId(string userId)
     {
       string sql = "SELECT * FROM vaults WHERE userId = @userId";

@@ -89,12 +89,14 @@ export default new Vuex.Store({
       try {
         await api.delete("keeps/" + keepId)
         dispatch("getKeeps")
+        dispatch("getMyKeeps")
       } catch (error) {
         alert(JSON.stringify(error.response.data));
       }
     },
     async getVaultKeeps({ dispatch }, vaultId) {
       try {
+
         let res = await api.get("vaults/" + vaultId + "/keeps")
         this.commit("setVaultKeeps", res.data)
       } catch (err) {
@@ -118,14 +120,14 @@ export default new Vuex.Store({
         console.error(error)
       }
     },
-    async getVaults({ commit, dispatch }) {
-      try {
-        let res = await api.get("vaults")
-        commit("setVaults", res.data)
-      } catch (error) {
-        console.error(error)
-      }
-    },
+    // async getVaults({ commit, dispatch }) {
+    //   try {
+    //     let res = await api.get("vaults")
+    //     commit("setVaults", res.data)
+    //   } catch (error) {
+    //     console.error(error)
+    //   }
+    // },
     async createKeep({ commit, dispatch }, newKeep) {
       let res = await api.post("keeps", newKeep)
       dispatch("getKeeps")
@@ -133,6 +135,7 @@ export default new Vuex.Store({
     async createVault({ commit, dispatch }, newVault) {
       let res = await api.post("vaults", newVault)
       dispatch("getVaults")
+      dispatch("getMyVaults")
     },
 
     async getMyKeeps({ commit }) {
@@ -150,6 +153,14 @@ export default new Vuex.Store({
       try {
         let res = await api.post("/vaultKeeps", vaultKeep)
         dispatch("getVaultKeeps")
+      } catch (err) {
+        console.error(err)
+      }
+    },
+    async removeFromVault({ dispatch }, { vaultKeepId, vaultId }) {
+      try {
+        let res = await api.delete("/vaultKeeps/" + vaultKeepId)
+        dispatch("getVaultKeeps", vaultId)
       } catch (err) {
         console.error(err)
       }
