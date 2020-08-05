@@ -1,6 +1,7 @@
 <template>
   <div class="keep-form">
-    <form @submit.prevent="createKeep">
+    <button @click="addForm = !addForm">Add Keep</button>
+    <form v-show="addForm" @submit.prevent="createKeep">
       <div class="form-group">
         <label for="name">Name</label>
         <input
@@ -43,16 +44,17 @@ export default {
 
   data() {
     return {
-      newKeep: {}
+      addForm: false,
+      newKeep: {},
     };
   },
   computed: {},
   methods: {
     createKeep() {
       this.$store.dispatch("createKeep", this.newKeep);
-    }
+    },
   },
-  components: {}
+  components: {},
 };
 // v-model="newCar.model"
 </script>
